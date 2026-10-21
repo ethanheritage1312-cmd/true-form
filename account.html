@@ -225,10 +225,22 @@
     });
 
     form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      message.textContent =
-        "Account services are not connected yet. Your details have not been sent or saved.";
-    });
+  event.preventDefault();
+
+  if (!form.reportValidity()) return;
+
+  const params = new URLSearchParams(window.location.search);
+  const training = params.get("training");
+
+  if (training !== "home" && training !== "gym") {
+    message.textContent =
+      "Please return to the home page and choose Training From Home or Training At Your Gym first.";
+    return;
+  }
+
+  window.location.href =
+    "describe-yourself.html?training=" + encodeURIComponent(training);
+});
 
     document.getElementById("googleButton").addEventListener("click", () => {
       message.textContent =
