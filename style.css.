@@ -351,3 +351,43 @@ footer p {
     transition: none !important;
   }
 }
+
+/* TRUE FORM AUTOMATIC SLIDESHOW */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(12, 13, 12, 0.88),
+      rgba(12, 13, 12, 0.35)
+    ),
+    var(--next-hero-image) center / cover no-repeat;
+
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+.hero.changing::before {
+  opacity: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero::before {
+    transition: none;
+  }
+}
