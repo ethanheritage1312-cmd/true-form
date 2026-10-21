@@ -363,13 +363,32 @@
     updateTrainingQuestions();
 
     profileForm.addEventListener("submit", event => {
-      event.preventDefault();
+  event.preventDefault();
 
-      if (!profileForm.reportValidity()) return;
+  if (!profileForm.reportValidity()) return;
 
-      message.textContent =
-        "Your answers are filled in. Saving profiles and moving to membership will be connected after we add secure account storage and the membership page.";
-    });
+  const params = new URLSearchParams(
+    window.location.search
+  );
+
+  const training = params.get("training");
+
+  if (training !== "home" && training !== "gym") {
+    message.textContent =
+      "Please return to your training choice and start again.";
+    return;
+  }
+
+  if (trainingType.value !== training) {
+    message.textContent =
+      "Your training choice does not match. Please select your original training option.";
+    return;
+  }
+
+  window.location.href =
+    "membership.html?training=" +
+    encodeURIComponent(training);
+});
   </script>
 </body>
 </html>
