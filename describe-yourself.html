@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Describe Yourself | True Form</title>
+  <style>
+    :root {
+      --cream: #f5f0e8;
+      --dark: #20201e;
+      --terracotta: #c76f4b;
+      --muted: #77736d;
+      --border: #e5ded5;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px 14px 40px;
+      background: var(--cream);
+      color: var(--dark);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .brand {
+      margin: 8px 0 25px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .brand span { color: var(--terracotta); }
+
+    .progress {
+      height: 5px;
+      margin-bottom: 24px;
+      overflow: hidden;
+      border-radius: 5px;
+      background: #e5ded5;
+    }
+
+    .progress-fill {
+      width: 50%;
+      height: 100%;
+      background: var(--terracotta);
+    }
+
+    .card {
+      padding: 28px 23px;
+      border-radius: 16px;
+      background: white;
+      box-shadow: 0 10px 30px #0000000a;
+    }
+
+    .eyebrow {
+      color: var(--terracotta);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 10px 0;
+      font-size: 30px;
+      line-height: 1.2;
+    }
+
+    .intro {
+      margin-bottom: 26px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .section-title {
+      margin: 25px 0 12px;
+      font-size: 17px;
+    }
+
+    label, .question-label {
+      display: block;
+      margin: 15px 0 7px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      min-height: 46px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: white;
+      color: var(--dark);
+      font: inherit;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid var(--terracotta);
+      outline-offset: 1px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .choices {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .choice {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      margin: 0;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      font-weight: 400;
+      line-height: 1.4;
+      cursor: pointer;
+    }
+
+    .choice input {
+      width: 17px;
+      min-height: 17px;
+      height: 17px;
+      margin: 1px 0 0;
+      accent-color: var(--terracotta);
+    }
+
+    .choice:has(input:checked) {
+      border-color: var(--terracotta);
+      background: #fcf3ee;
+    }
+
+    .help {
+      margin: 6px 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .button {
+      width: 100%;
+      min-height: 49px;
+      margin-top: 25px;
+      border: 0;
+      border-radius: 9px;
+      background: var(--terracotta);
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .back {
+      display: block;
+      margin-top: 17px;
+      color: var(--muted);
+      text-align: center;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    #message {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 460px) {
+      .card { padding: 24px 17px; }
+      .grid, .choices { grid-template-columns: 1fr; }
+      h1 { font-size: 27px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <div class="brand">TRUE <span>FORM</span></div>
+
+    <div class="progress">
+      <div class="progress-fill"></div>
+    </div>
+
+    <section class="card">
+      <div class="eyebrow">Your personal setup · Step 1 of 2</div>
+      <h1>Let's get to know you.</h1>
+      <p class="intro">
+        Tell us a little about yourself so your training plan can suit
+        your goals, your schedule and your experience.
+      </p>
+
+      <form id="profileForm">
+        <h2 class="section-title">About you</h2>
+
+        <label for="fullName">Full name</label>
+        <input id="fullName" name="fullName" autocomplete="name"
+          placeholder="Your name" required>
+
+        <div class="grid">
+          <div>
+            <label for="age">Age</label>
+            <input id="age" name="age" type="number"
+              min="16" max="100" placeholder="e.g. 25" required>
+          </div>
+          <div>
+            <label for="gender">Gender (optional)</label>
+            <select id="gender" name="gender">
+              <option value="">Prefer not to say</option>
+              <option>Female</option>
+              <option>Male</option>
+              <option>Non-binary</option>
+              <option>Self-describe</option>
+            </select>
+          </div>
+        </div>
+
+        <label for="goal">What is your main fitness goal?</label>
+        <select id="goal" name="goal" required>
+          <option value="">Choose your main goal</option>
+          <option>Build muscle</option>
+          <option>Lose body fat</option>
+          <option>Improve strength</option>
+          <option>Improve fitness and stamina</option>
+          <option>Improve general health</option>
+          <option>Build a consistent routine</option>
+        </select>
+
+        <label for="experience">How would you describe your experience?</label>
+        <select id="experience" name="experience" required>
+          <option value="">Choose your experience</option>
+          <option>Beginner — just starting</option>
+          <option>Some experience</option>
+          <option>Experienced</option>
+        </select>
+
+        <h2 class="section-title">Your routine</h2>
+
+        <div class="grid">
+          <div>
+            <label for="days">Training days per week</label>
+            <select id="days" name="days" required>
+              <option value="">Choose days</option>
+              <option value="2">2 days</option>
+              <option value="3">3 days</option>
+              <option value="4">4 days</option>
+              <option value="5">5 days</option>
+              <option value="6">6 days</option>
+            </select>
+          </div>
+          <div>
+            <label for="duration">Time per session</label>
+            <select id="duration" name="duration" required>
+              <option value="">Choose duration</option>
+              <option>15–30 minutes</option>
+              <option>30–45 minutes</option>
+              <option>45–60 minutes</option>
+              <option>60+ minutes</option>
+            </select>
+          </div>
+        </div>
+
+        <label for="trainingType">Where will you train?</label>
+        <select id="trainingType" name="trainingType" required>
+          <option value="">Choose your training option</option>
+          <option value="home">Training From Home</option>
+          <option value="gym">Training At Your Gym</option>
+        </select>
+
+        <div id="homeQuestions" hidden>
+          <h2 class="section-title">Your home setup</h2>
+          <p class="help">Choose all the equipment you have available.</p>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" name="equipment" value="Bodyweight"> Bodyweight only</label>
+            <label class="choice"><input type="checkbox" name="equipment" value="Dumbbells"> Dumbbells</label>
+            <label class="choice"><input type="checkbox" name="equipment" value="Resistance bands"> Resistance bands</label>
+            <label class="choice"><input type="checkbox" name="equipment" value="Bench"> Bench or step</label>
+            <label class="choice"><input type="checkbox" name="equipment" value="Home gym equipment"> Home gym equipment</label>
+          </div>
+          <label for="space">Available workout space</label>
+          <select id="space" name="space">
+            <option value="">Choose your space</option>
+            <option>Small space</option>
+            <option>Enough room for a mat</option>
+            <option>Large workout area</option>
+          </select>
+        </div>
+
+        <div id="gymQuestions" hidden>
+          <h2 class="section-title">Your gym setup</h2>
+          <p class="help">Which equipment is available at your gym?</p>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" name="gymEquipment" value="Free weights"> Free weights and dumbbells</label>
+            <label class="choice"><input type="checkbox" name="gymEquipment" value="Machines"> Weight machines</label>
+            <label class="choice"><input type="checkbox" name="gymEquipment" value="Cable machines"> Cable machines</label>
+            <label class="choice"><input type="checkbox" name="gymEquipment" value="Cardio machines"> Cardio machines</label>
+            <label class="choice"><input type="checkbox" name="gymEquipment" value="Full gym"> Full gym equipment</label>
+          </div>
+        </div>
+
+        <h2 class="section-title">Anything else we should know?</h2>
+
+        <label for="limitations">Exercises, injuries or physical limitations to consider (optional)</label>
+        <textarea id="limitations" name="limitations"
+          placeholder="Share only what you're comfortable sharing."></textarea>
+
+        <label for="notes">Anything else about your goals? (optional)</label>
+        <textarea id="notes" name="notes"
+          placeholder="Tell us what you want your plan to focus on."></textarea>
+
+        <button class="button" type="submit">Continue to membership</button>
+        <p id="message" role="status" aria-live="polite"></p>
+      </form>
+
+      <a class="back" href="account.html">← Back to account page</a>
+    </section>
+  </main>
+
+  <script>
+    const trainingType = document.getElementById("trainingType");
+    const homeQuestions = document.getElementById("homeQuestions");
+    const gymQuestions = document.getElementById("gymQuestions");
+    const profileForm = document.getElementById("profileForm");
+    const message = document.getElementById("message");
+
+    function updateTrainingQuestions() {
+      const isHome = trainingType.value === "home";
+      const isGym = trainingType.value === "gym";
+
+      homeQuestions.hidden = !isHome;
+      gymQuestions.hidden = !isGym;
+
+      homeQuestions.querySelectorAll("input, select").forEach(el => {
+        el.disabled = !isHome;
+      });
+
+      gymQuestions.querySelectorAll("input, select").forEach(el => {
+        el.disabled = !isGym;
+      });
+    }
+
+    trainingType.addEventListener("change", updateTrainingQuestions);
+    updateTrainingQuestions();
+
+    profileForm.addEventListener("submit", event => {
+      event.preventDefault();
+
+      if (!profileForm.reportValidity()) return;
+
+      message.textContent =
+        "Your answers are filled in. Saving profiles and moving to membership will be connected after we add secure account storage and the membership page.";
+    });
+  </script>
+</body>
+</html>
