@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Membership | True Form</title>
+
+  <style>
+    :root {
+      --cream: #f5f0e8;
+      --dark: #20201e;
+      --terracotta: #c76f4b;
+      --muted: #77736d;
+      --border: #e5ded5;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 28px 15px 45px;
+      background: var(--cream);
+      color: var(--dark);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    .brand {
+      text-align: center;
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin: 8px 0 35px;
+    }
+
+    .brand span {
+      color: var(--terracotta);
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .eyebrow {
+      color: var(--terracotta);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 12px 0;
+      font-size: clamp(28px, 6vw, 40px);
+    }
+
+    .intro p {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .plan {
+      display: flex;
+      flex-direction: column;
+      padding: 25px 21px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px #00000008;
+    }
+
+    .plan.premium {
+      border: 2px solid var(--terracotta);
+    }
+
+    .tag {
+      color: var(--terracotta);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 12px 0 5px;
+      font-size: 23px;
+    }
+
+    .price {
+      margin: 10px 0;
+      font-size: 34px;
+      font-weight: 800;
+    }
+
+    .price span {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    .trial {
+      display: inline-block;
+      align-self: flex-start;
+      margin: 5px 0 15px;
+      padding: 7px 10px;
+      border-radius: 20px;
+      background: #fcf0e9;
+      color: #914a30;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .description {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    ul {
+      padding-left: 20px;
+      margin: 12px 0 24px;
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    li::marker {
+      color: var(--terracotta);
+    }
+
+    .choose {
+      display: block;
+      width: 100%;
+      margin-top: auto;
+      padding: 14px 10px;
+      border: 0;
+      border-radius: 9px;
+      background: var(--terracotta);
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .choose:hover {
+      background: #ad5c3d;
+    }
+
+    .terms {
+      margin-top: 25px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #ffffffa6;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .terms strong {
+      color: var(--dark);
+    }
+
+    .message {
+      margin-top: 15px;
+      color: var(--dark);
+      font-size: 14px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .back {
+      display: block;
+      margin-top: 22px;
+      text-align: center;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .plans {
+        grid-template-columns: 1fr;
+      }
+
+      .plan {
+        padding: 23px 19px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <div class="brand">TRUE <span>FORM</span></div>
+
+    <header class="intro">
+      <div class="eyebrow">Your personal fitness journey</div>
+      <h1>Choose your membership.</h1>
+      <p>
+        Start with a 10-day free trial and find the plan
+        that fits your goals, your routine and your lifestyle.
+      </p>
+    </header>
+
+    <section class="plans">
+      <article class="plan">
+        <div class="tag">Your training essentials</div>
+        <h2>Standard</h2>
+        <p class="description">
+          Build strength, consistency and confidence with
+          your personalized exercise plan.
+        </p>
+
+        <div class="price">R80 <span>/ month</span></div>
+        <div class="trial">10-day free trial</div>
+
+        <ul>
+          <li>Personalized exercise plan</li>
+          <li>Workouts matched to your goals</li>
+          <li>Sets, reps and training guidance</li>
+          <li>Progress tracking</li>
+          <li>Home or gym training</li>
+        </ul>
+
+        <button class="choose" type="button"
+          data-plan="standard">
+          Choose Standard
+        </button>
+      </article>
+
+      <article class="plan premium">
+        <div class="tag">Complete fitness experience</div>
+        <h2>Premium</h2>
+        <p class="description">
+          Support your training with nutrition guidance
+          designed to complement your fitness goals.
+        </p>
+
+        <div class="price">R130 <span>/ month</span></div>
+        <div class="trial">10-day free trial</div>
+
+        <ul>
+          <li>Everything in Standard</li>
+          <li>Personalized food guidance</li>
+          <li>Nutrition and meal guidance</li>
+          <li>Support for your fitness goals</li>
+          <li>Home or gym training</li>
+        </ul>
+
+        <button class="choose" type="button"
+          data-plan="premium">
+          Choose Premium
+        </button>
+      </article>
+    </section>
+
+    <section class="terms">
+      <strong>Free trial and payment terms</strong>
+      <p>
+        A valid payment method will be required to activate
+        your 10-day free trial. Your selected plan will renew
+        at R80 per month for Standard or R130 per month for
+        Premium after the trial ends, unless you cancel before
+        the first payment is due.
+      </p>
+      <p>
+        You must be shown the applicable renewal date and
+        cancellation instructions before activating your trial.
+        Any payment details must be handled by a secure payment
+        provider, not stored directly on this website.
+      </p>
+    </section>
+
+    <p class="message" id="message" role="status"
+      aria-live="polite"></p>
+
+    <a class="back" href="index.html">
+      ← Back to home page
+    </a>
+  </main>
+
+  <script>
+    const message = document.getElementById("message");
+    const params = new URLSearchParams(window.location.search);
+    const training = params.get("training");
+
+    document.querySelectorAll("[data-plan]").forEach(button => {
+      button.addEventListener("click", () => {
+        const plan = button.dataset.plan;
+
+        if (training !== "home" && training !== "gym") {
+          message.textContent =
+            "Please start from the home page and choose your training option first.";
+          return;
+        }
+
+        const price = plan === "premium" ? "R130" : "R80";
+
+        message.textContent =
+          "You selected " + plan.toUpperCase() + " at " + price +
+          " per month. Payment setup and trial activation are not connected yet. No payment has been taken.";
+      });
+    });
+  </script>
+</body>
+</html>
