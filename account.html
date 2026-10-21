@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join True Form</title>
+  <style>
+    :root {
+      --cream: #f5f0e8;
+      --dark: #20201e;
+      --terracotta: #c76f4b;
+      --muted: #77736d;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 24px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--cream);
+      color: var(--dark);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 440px;
+      padding: 34px 26px;
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 12px 35px #00000012;
+    }
+
+    .brand {
+      margin-bottom: 28px;
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-align: center;
+    }
+
+    .brand span { color: var(--terracotta); }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 29px;
+      text-align: center;
+    }
+
+    .intro {
+      margin: 0 0 26px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin: 16px 0 7px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ddd8d0;
+      border-radius: 9px;
+      font-size: 16px;
+    }
+
+    input:focus {
+      outline: 2px solid var(--terracotta);
+    }
+
+    button {
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .primary, .google {
+      width: 100%;
+      min-height: 48px;
+      margin-top: 20px;
+      border-radius: 9px;
+    }
+
+    .primary {
+      border: none;
+      background: var(--terracotta);
+      color: white;
+    }
+
+    .google {
+      margin-top: 16px;
+      border: 1px solid #ddd8d0;
+      background: white;
+      color: var(--dark);
+    }
+
+    .divider {
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .switch {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .switch button {
+      border: none;
+      background: transparent;
+      color: var(--terracotta);
+    }
+
+    .notice, #message {
+      margin-top: 18px;
+      font-size: 12px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .notice { color: var(--muted); }
+
+    @media (max-width: 360px) {
+      .card { padding: 28px 19px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="brand">TRUE <span>FORM</span></div>
+
+    <h1 id="heading">Create your account</h1>
+    <p class="intro" id="intro">
+      Your fitness journey starts here. Create an account to continue.
+    </p>
+
+    <form id="accountForm">
+      <div id="nameField">
+        <label for="name">Full name</label>
+        <input id="name" name="name" autocomplete="name"
+          placeholder="Your full name" required>
+      </div>
+
+      <label for="email">Email address</label>
+      <input id="email" name="email" type="email"
+        autocomplete="email" placeholder="you@example.com" required>
+
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password"
+        autocomplete="new-password" minlength="8"
+        placeholder="At least 8 characters" required>
+
+      <button class="primary" id="submitButton" type="submit">
+        Create account
+      </button>
+    </form>
+
+    <div class="divider">OR</div>
+
+    <button class="google" id="googleButton" type="button">
+      Continue with Google
+    </button>
+
+    <div class="switch">
+      <span id="switchText">Already have an account?</span>
+      <button id="switchButton" type="button">Sign in</button>
+    </div>
+
+    <p id="message" role="status" aria-live="polite"></p>
+
+    <p class="notice">
+      Secure account registration and Google sign-in will be activated
+      after we connect the authentication service.
+    </p>
+  </main>
+
+  <script>
+    const form = document.getElementById("accountForm");
+    const heading = document.getElementById("heading");
+    const intro = document.getElementById("intro");
+    const nameField = document.getElementById("nameField");
+    const nameInput = document.getElementById("name");
+    const password = document.getElementById("password");
+    const submitButton = document.getElementById("submitButton");
+    const switchText = document.getElementById("switchText");
+    const switchButton = document.getElementById("switchButton");
+    const message = document.getElementById("message");
+
+    let signingIn = false;
+
+    switchButton.addEventListener("click", () => {
+      signingIn = !signingIn;
+
+      heading.textContent = signingIn
+        ? "Welcome back" : "Create your account";
+
+      intro.textContent = signingIn
+        ? "Sign in to continue your fitness journey."
+        : "Your fitness journey starts here. Create an account to continue.";
+
+      nameField.hidden = signingIn;
+      nameInput.required = !signingIn;
+      password.autocomplete = signingIn
+        ? "current-password" : "new-password";
+      password.minLength = signingIn ? 1 : 8;
+
+      submitButton.textContent = signingIn ? "Sign in" : "Create account";
+      switchText.textContent = signingIn
+        ? "New to True Form?" : "Already have an account?";
+      switchButton.textContent = signingIn ? "Create account" : "Sign in";
+      message.textContent = "";
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      message.textContent =
+        "Account services are not connected yet. Your details have not been sent or saved.";
+    });
+
+    document.getElementById("googleButton").addEventListener("click", () => {
+      message.textContent =
+        "Google sign-in will work after we connect the secure authentication service.";
+    });
+  </script>
+</body>
+</html>
