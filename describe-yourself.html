@@ -1,9 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Describe Yourself | True Form</title>
+  <meta name="theme-color" content="#f5f0e8">
+  <title>Your Fitness Profile | True Form</title>
+
   <style>
     :root {
       --cream: #f5f0e8;
@@ -11,39 +14,51 @@
       --terracotta: #c76f4b;
       --muted: #77736d;
       --border: #e5ded5;
+      --soft: #fcf3ee;
     }
 
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      padding: 24px 14px 40px;
+      padding: 18px 13px 40px;
       background: var(--cream);
       color: var(--dark);
       font-family: Arial, Helvetica, sans-serif;
     }
 
     .container {
-      max-width: 680px;
-      margin: 0 auto;
+      max-width: 650px;
+      margin: auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 5px 2px 18px;
     }
 
     .brand {
-      margin: 8px 0 25px;
-      text-align: center;
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: 2px;
+      font-size: 23px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
     }
 
     .brand span { color: var(--terracotta); }
 
+    .step {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
     .progress {
       height: 5px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       overflow: hidden;
-      border-radius: 5px;
-      background: #e5ded5;
+      border-radius: 10px;
+      background: var(--border);
     }
 
     .progress-fill {
@@ -52,60 +67,149 @@
       background: var(--terracotta);
     }
 
-    .card {
-      padding: 28px 23px;
-      border-radius: 16px;
-      background: white;
-      box-shadow: 0 10px 30px #0000000a;
+    .hero {
+      position: relative;
+      min-height: 300px;
+      margin-bottom: 18px;
+      overflow: hidden;
+      border-radius: 18px;
+      background: #d7c4ad;
+    }
+
+    .hero img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      inset: 0;
+      object-fit: cover;
+      object-position: center 35%;
+    }
+
+    .hero-shade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        0deg,
+        rgba(25, 23, 20, .82),
+        rgba(25, 23, 20, .12) 75%
+      );
+    }
+
+    .hero-content {
+      position: absolute;
+      right: 20px;
+      bottom: 21px;
+      left: 20px;
+      color: white;
     }
 
     .eyebrow {
-      color: var(--terracotta);
-      font-size: 12px;
+      color: #f1b397;
+      font-size: 11px;
       font-weight: 800;
       letter-spacing: 1.5px;
       text-transform: uppercase;
     }
 
     h1 {
-      margin: 10px 0;
-      font-size: 30px;
-      line-height: 1.2;
+      margin: 9px 0;
+      font-size: 31px;
+      line-height: 1.15;
     }
 
-    .intro {
-      margin-bottom: 26px;
-      color: var(--muted);
-      font-size: 14px;
+    .hero-content p {
+      max-width: 420px;
+      margin: 0;
+      color: #f6eee7;
+      font-size: 13px;
       line-height: 1.6;
     }
 
-    .section-title {
-      margin: 25px 0 12px;
-      font-size: 17px;
+    .card {
+      padding: 23px 18px;
+      border: 1px solid #eee7df;
+      border-radius: 18px;
+      background: white;
+      box-shadow: 0 8px 24px #00000006;
     }
 
-    label, .question-label {
+    .section {
+      margin-bottom: 30px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .section-icon {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+      place-items: center;
+      border-radius: 13px;
+      background: var(--soft);
+      color: var(--terracotta);
+      font-size: 22px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .subheading {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .section-photo {
+      width: 100%;
+      height: 145px;
       display: block;
-      margin: 15px 0 7px;
+      margin: 0 0 17px;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+
+    label, legend {
+      display: block;
+      margin-bottom: 8px;
       font-size: 13px;
       font-weight: 700;
     }
 
-    input, select, textarea {
+    fieldset {
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    legend { margin-bottom: 12px; }
+
+    .field { margin-top: 17px; }
+
+    input:not([type="radio"]):not([type="checkbox"]),
+    select, textarea {
       width: 100%;
-      min-height: 46px;
+      min-height: 47px;
       padding: 12px;
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 10px;
       background: white;
       color: var(--dark);
       font: inherit;
-      font-size: 15px;
+      font-size: 14px;
     }
 
     textarea {
-      min-height: 90px;
+      min-height: 95px;
       resize: vertical;
     }
 
@@ -120,51 +224,152 @@
       gap: 12px;
     }
 
-    .choices {
+    .goal-grid, .place-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
     }
 
-    .choice {
+    .visual-option {
+      position: relative;
       display: flex;
-      align-items: flex-start;
-      gap: 9px;
+      min-width: 0;
+      flex-direction: column;
       margin: 0;
-      padding: 12px;
+      overflow: hidden;
       border: 1px solid var(--border);
-      border-radius: 9px;
-      font-weight: 400;
-      line-height: 1.4;
+      border-radius: 12px;
+      background: white;
       cursor: pointer;
+      transition: border-color .15s, background .15s;
     }
 
-    .choice input {
-      width: 17px;
-      min-height: 17px;
-      height: 17px;
-      margin: 1px 0 0;
+    .visual-option:hover {
+      border-color: var(--terracotta);
+    }
+
+    .visual-option:has(input:checked) {
+      border: 2px solid var(--terracotta);
+      background: var(--soft);
+    }
+
+    .visual-option input {
+      position: absolute;
+      z-index: 2;
+      top: 10px;
+      right: 10px;
+      width: 19px;
+      height: 19px;
+      margin: 0;
       accent-color: var(--terracotta);
     }
 
-    .choice:has(input:checked) {
+    .visual-option img {
+      display: block;
+      width: 100%;
+      height: 105px;
+      object-fit: cover;
+    }
+
+    .option-copy {
+      display: block;
+      padding: 11px;
+    }
+
+    .option-title {
+      display: block;
+      padding-right: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .option-detail {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 400;
+      line-height: 1.45;
+    }
+
+    .compact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .compact-option {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-height: 61px;
+      margin: 0;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .compact-option:has(input:checked) {
       border-color: var(--terracotta);
-      background: #fcf3ee;
+      background: var(--soft);
+    }
+
+    .compact-option input {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 18px;
+      margin: 0;
+      accent-color: var(--terracotta);
+    }
+
+    .equipment-icon {
+      display: grid;
+      width: 37px;
+      height: 37px;
+      flex: 0 0 37px;
+      place-items: center;
+      border-radius: 9px;
+      background: var(--soft);
+      font-size: 20px;
+    }
+
+    .compact-copy {
+      display: block;
+      padding-right: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.4;
     }
 
     .help {
-      margin: 6px 0;
+      margin: -4px 0 12px;
       color: var(--muted);
       font-size: 12px;
       line-height: 1.5;
     }
 
+    .notice {
+      display: flex;
+      gap: 11px;
+      margin-top: 5px;
+      padding: 15px;
+      border-radius: 12px;
+      background: #f8f3ec;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .notice strong { color: var(--dark); }
+
     .button {
       width: 100%;
-      min-height: 49px;
-      margin-top: 25px;
+      min-height: 51px;
+      margin-top: 21px;
       border: 0;
-      border-radius: 9px;
+      border-radius: 10px;
       background: var(--terracotta);
       color: white;
       font-size: 15px;
@@ -172,163 +377,405 @@
       cursor: pointer;
     }
 
+    .button:hover { background: #ad5c3d; }
+
     .back {
       display: block;
-      margin-top: 17px;
+      margin-top: 18px;
       color: var(--muted);
       text-align: center;
       text-decoration: none;
-      font-size: 14px;
+      font-size: 13px;
     }
 
     #message {
       color: var(--muted);
       font-size: 13px;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
-    @media (max-width: 460px) {
-      .card { padding: 24px 17px; }
-      .grid, .choices { grid-template-columns: 1fr; }
-      h1 { font-size: 27px; }
+    [hidden] { display: none !important; }
+
+    @media (max-width: 400px) {
+      .card { padding: 20px 14px; }
+      .hero { min-height: 275px; }
+      h1 { font-size: 28px; }
+      .visual-option img { height: 88px; }
+      .option-copy { padding: 9px; }
+      .grid { gap: 8px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
     }
   </style>
 </head>
+
 <body>
   <main class="container">
-    <div class="brand">TRUE <span>FORM</span></div>
+    <header class="topbar">
+      <span class="step">YOUR PROFILE</span>
+      <div class="brand">TRUE <span>FORM</span></div>
+      <span class="step">01 / 02</span>
+    </header>
 
-    <div class="progress">
+    <div class="progress" aria-label="Profile setup progress">
       <div class="progress-fill"></div>
     </div>
 
+    <div class="hero">
+      <img
+        src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=80"
+        alt="Modern fitness gym"
+        fetchpriority="high">
+      <div class="hero-shade"></div>
+      <div class="hero-content">
+        <div class="eyebrow">Your fitness profile</div>
+        <h1>Real goals.<br>Real progress.</h1>
+        <p>Tell us about yourself so we can help shape a training plan around your life.</p>
+      </div>
+    </div>
+
     <section class="card">
-      <div class="eyebrow">Your personal setup · Step 1 of 2</div>
-      <h1>Let's get to know you.</h1>
-      <p class="intro">
-        Tell us a little about yourself so your training plan can suit
-        your goals, your schedule and your experience.
-      </p>
-
       <form id="profileForm">
-        <h2 class="section-title">About you</h2>
-
-        <label for="fullName">Full name</label>
-        <input id="fullName" name="fullName" autocomplete="name"
-          placeholder="Your name" required>
-
-        <div class="grid">
-          <div>
-            <label for="age">Age</label>
-            <input id="age" name="age" type="number"
-              min="16" max="100" placeholder="e.g. 25" required>
+        <section class="section">
+          <div class="section-heading">
+            <div class="section-icon" aria-hidden="true">♙</div>
+            <div>
+              <h2>About you</h2>
+              <p class="subheading">Let's start with the basics.</p>
+            </div>
           </div>
-          <div>
-            <label for="gender">Gender (optional)</label>
-            <select id="gender" name="gender">
-              <option value="">Prefer not to say</option>
-              <option>Female</option>
-              <option>Male</option>
-              <option>Non-binary</option>
-              <option>Self-describe</option>
+
+          <img class="section-photo"
+            src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=75"
+            alt="Athlete training and building healthy habits"
+            loading="lazy">
+
+          <div class="field">
+            <label for="fullName">Full name</label>
+            <input id="fullName" name="fullName"
+              autocomplete="name" placeholder="Your full name" required>
+          </div>
+
+          <div class="grid field">
+            <div>
+              <label for="age">Age</label>
+              <input id="age" name="age" type="number"
+                min="16" max="100" placeholder="e.g. 25" required>
+            </div>
+            <div>
+              <label for="gender">Gender (optional)</label>
+              <select id="gender" name="gender">
+                <option value="">Prefer not to say</option>
+                <option>Female</option>
+                <option>Male</option>
+                <option>Non-binary</option>
+                <option>Self-describe</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-heading">
+            <div class="section-icon" aria-hidden="true">◎</div>
+            <div>
+              <h2>Your main goal</h2>
+              <p class="subheading">Every fitness journey starts somewhere.</p>
+            </div>
+          </div>
+
+          <img class="section-photo"
+            src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=900&q=75"
+            alt="Strength training in the gym"
+            loading="lazy">
+
+          <fieldset>
+            <legend>What is your main fitness goal?</legend>
+            <div class="goal-grid">
+              <label class="visual-option">
+                <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=500&q=70" alt="" loading="lazy">
+                <input type="radio" name="goal" value="Build muscle" required>
+                <span class="option-copy">
+                  <span class="option-title">Build muscle</span>
+                  <span class="option-detail">Get stronger, one workout at a time.</span>
+                </span>
+              </label>
+
+              <label class="visual-option">
+                <img src="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=500&q=70" alt="" loading="lazy">
+                <input type="radio" name="goal" value="Lose body fat">
+                <span class="option-copy">
+                  <span class="option-title">Lose body fat</span>
+                  <span class="option-detail">Build sustainable healthy habits.</span>
+                </span>
+              </label>
+
+              <label class="visual-option">
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=500&q=70" alt="" loading="lazy">
+                <input type="radio" name="goal" value="Improve strength">
+                <span class="option-copy">
+                  <span class="option-title">Improve strength</span>
+                  <span class="option-detail">Challenge yourself at your pace.</span>
+                </span>
+              </label>
+
+              <label class="visual-option">
+                <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=500&q=70" alt="" loading="lazy">
+                <input type="radio" name="goal" value="Improve fitness and stamina">
+                <span class="option-copy">
+                  <span class="option-title">Fitness and stamina</span>
+                  <span class="option-detail">Feel fitter in everyday life.</span>
+                </span>
+              </label>
+
+              <label class="visual-option">
+                <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=500&q=70" alt="" loading="lazy">
+                <input type="radio" name="goal" value="Improve general health">
+                <span class="option-copy">
+                  <span class="option-title">Improve general health</span>
+                  <span class="option-detail">Make movement part of your life.</span>
+                </span>
+              </label>
+
+              <label class="visual-option">
+                <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=500&q=70" alt="" loading="lazy">
+                <input type="radio" name="goal" value="Build a consistent routine">
+                <span class="option-copy">
+                  <span class="option-title">Build a routine</span>
+                  <span class="option-detail">Small steps create lasting progress.</span>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="field">
+            <label for="experience">How would you describe your experience?</label>
+            <select id="experience" name="experience" required>
+              <option value="">Choose your experience</option>
+              <option>Beginner — just starting</option>
+              <option>Some experience</option>
+              <option>Experienced</option>
             </select>
           </div>
-        </div>
+        </section>
 
-        <label for="goal">What is your main fitness goal?</label>
-        <select id="goal" name="goal" required>
-          <option value="">Choose your main goal</option>
-          <option>Build muscle</option>
-          <option>Lose body fat</option>
-          <option>Improve strength</option>
-          <option>Improve fitness and stamina</option>
-          <option>Improve general health</option>
-          <option>Build a consistent routine</option>
-        </select>
+        <section class="section">
+          <div class="section-heading">
+            <div class="section-icon" aria-hidden="true">◷</div>
+            <div>
+              <h2>Your routine</h2>
+              <p class="subheading">Your plan should fit your real life.</p>
+            </div>
+          </div>
 
-        <label for="experience">How would you describe your experience?</label>
-        <select id="experience" name="experience" required>
-          <option value="">Choose your experience</option>
-          <option>Beginner — just starting</option>
-          <option>Some experience</option>
-          <option>Experienced</option>
-        </select>
+          <img class="section-photo"
+            src="https://images.unsplash.com/photo-1517838277536-fc5b0c7f6c83?auto=format&fit=crop&w=900&q=75"
+            alt="Workout session and training routine"
+            loading="lazy">
 
-        <h2 class="section-title">Your routine</h2>
+          <div class="grid">
+            <div>
+              <label for="days">Training days per week</label>
+              <select id="days" name="days" required>
+                <option value="">Choose days</option>
+                <option value="2">2 days</option>
+                <option value="3">3 days</option>
+                <option value="4">4 days</option>
+                <option value="5">5 days</option>
+                <option value="6">6 days</option>
+              </select>
+            </div>
+            <div>
+              <label for="duration">Time per session</label>
+              <select id="duration" name="duration" required>
+                <option value="">Choose duration</option>
+                <option>15–30 minutes</option>
+                <option>30–45 minutes</option>
+                <option>45–60 minutes</option>
+                <option>60+ minutes</option>
+              </select>
+            </div>
+          </div>
+        </section>
 
-        <div class="grid">
-          <div>
-            <label for="days">Training days per week</label>
-            <select id="days" name="days" required>
-              <option value="">Choose days</option>
-              <option value="2">2 days</option>
-              <option value="3">3 days</option>
-              <option value="4">4 days</option>
-              <option value="5">5 days</option>
-              <option value="6">6 days</option>
+        <section class="section">
+          <div class="section-heading">
+            <div class="section-icon" aria-hidden="true">⌂</div>
+            <div>
+              <h2>Where will you train?</h2>
+              <p class="subheading">Choose the environment that works for you.</p>
+            </div>
+          </div>
+
+          <fieldset>
+            <legend>Choose your training option</legend>
+            <div class="place-grid">
+              <label class="visual-option">
+                <img src="https://images.unsplash.com/photo-1599447421416-3414500d18a5?auto=format&fit=crop&w=600&q=75" alt="Comfortable home workout space" loading="lazy">
+                <input type="radio" name="trainingType" value="home" required>
+                <span class="option-copy">
+                  <span class="option-title">Training From Home</span>
+                  <span class="option-detail">Your space, your pace.</span>
+                </span>
+              </label>
+
+              <label class="visual-option">
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=75" alt="Gym with workout equipment" loading="lazy">
+                <input type="radio" name="trainingType" value="gym">
+                <span class="option-copy">
+                  <span class="option-title">Training At Your Gym</span>
+                  <span class="option-detail">Make the most of your gym.</span>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+        </section>
+
+        <section class="section" id="homeQuestions" hidden>
+          <div class="section-heading">
+            <div class="section-icon" aria-hidden="true">⌂</div>
+            <div>
+              <h2>Your home setup</h2>
+              <p class="subheading">A little space is enough to begin.</p>
+            </div>
+          </div>
+
+          <img class="section-photo"
+            src="https://images.unsplash.com/photo-1599447421416-3414500d18a5?auto=format&fit=crop&w=900&q=75"
+            alt="Home workout area"
+            loading="lazy">
+
+          <fieldset>
+            <legend>Choose all the equipment you have available</legend>
+            <p class="help">Select every option that applies.</p>
+            <div class="compact-grid">
+              <label class="compact-option">
+                <input type="checkbox" name="equipment" value="Bodyweight">
+                <span class="equipment-icon">◯</span>
+                <span class="compact-copy">Bodyweight only</span>
+              </label>
+              <label class="compact-option">
+                <input type="checkbox" name="equipment" value="Dumbbells">
+                <span class="equipment-icon">🏋</span>
+                <span class="compact-copy">Dumbbells</span>
+              </label>
+              <label class="compact-option">
+                <input type="checkbox" name="equipment" value="Resistance bands">
+                <span class="equipment-icon">↝</span>
+                <span class="compact-copy">Resistance bands</span>
+              </label>
+              <label class="compact-option">
+                <input type="checkbox" name="equipment" value="Bench">
+                <span class="equipment-icon">▱</span>
+                <span class="compact-copy">Bench or step</span>
+              </label>
+              <label class="compact-option">
+                <input type="checkbox" name="equipment" value="Home gym equipment">
+                <span class="equipment-icon">＋</span>
+                <span class="compact-copy">Home gym equipment</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="field">
+            <label for="space">Available workout space</label>
+            <select id="space" name="space">
+              <option value="">Choose your space</option>
+              <option>Small space</option>
+              <option>Enough room for a mat</option>
+              <option>Large workout area</option>
             </select>
           </div>
-          <div>
-            <label for="duration">Time per session</label>
-            <select id="duration" name="duration" required>
-              <option value="">Choose duration</option>
-              <option>15–30 minutes</option>
-              <option>30–45 minutes</option>
-              <option>45–60 minutes</option>
-              <option>60+ minutes</option>
-            </select>
+        </section>
+
+        <section class="section" id="gymQuestions" hidden>
+          <div class="section-heading">
+            <div class="section-icon" aria-hidden="true">▦</div>
+            <div>
+              <h2>Your gym setup</h2>
+              <p class="subheading">Let's work with the equipment available to you.</p>
+            </div>
           </div>
+
+          <img class="section-photo"
+            src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=900&q=75"
+            alt="Gym equipment and workout machines"
+            loading="lazy">
+
+          <fieldset>
+            <legend>Which equipment is available at your gym?</legend>
+            <p class="help">Choose all that apply.</p>
+            <div class="compact-grid">
+              <label class="compact-option">
+                <input type="checkbox" name="gymEquipment" value="Free weights">
+                <span class="equipment-icon">🏋</span>
+                <span class="compact-copy">Free weights and dumbbells</span>
+              </label>
+              <label class="compact-option">
+                <input type="checkbox" name="gymEquipment" value="Machines">
+                <span class="equipment-icon">▤</span>
+                <span class="compact-copy">Weight machines</span>
+              </label>
+              <label class="compact-option">
+                <input type="checkbox" name="gymEquipment" value="Cable machines">
+                <span class="equipment-icon">↗</span>
+                <span class="compact-copy">Cable machines</span>
+              </label>
+              <label class="compact-option">
+                <input type="checkbox" name="gymEquipment" value="Cardio machines">
+                <span class="equipment-icon">◷</span>
+                <span class="compact-copy">Cardio machines</span>
+              </label>
+              <label class="compact-option">
+                <input type="checkbox" name="gymEquipment" value="Full gym">
+                <span class="equipment-icon">＋</span>
+                <span class="compact-copy">Full gym equipment</span>
+              </label>
+            </div>
+          </fieldset>
+        </section>
+
+        <section class="section">
+          <div class="section-heading">
+            <div class="section-icon" aria-hidden="true">✎</div>
+            <div>
+              <h2>Anything else?</h2>
+              <p class="subheading">Your journey is personal. Tell us what matters to you.</p>
+            </div>
+          </div>
+
+          <img class="section-photo"
+            src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=900&q=75"
+            alt="A calm moment for personal reflection"
+            loading="lazy">
+
+          <div class="field">
+            <label for="limitations">
+              Exercises, injuries or physical limitations (optional)
+            </label>
+            <textarea id="limitations" name="limitations"
+              placeholder="Share only what you're comfortable sharing."></textarea>
+          </div>
+
+          <div class="field">
+            <label for="notes">Anything else about your goals? (optional)</label>
+            <textarea id="notes" name="notes"
+              placeholder="Tell us what you want your plan to focus on."></textarea>
+          </div>
+        </section>
+
+        <div class="notice">
+          <span aria-hidden="true">♡</span>
+          <span><strong>Your goals, your journey.</strong><br>
+            Review your answers before continuing to choose your membership.</span>
         </div>
 
-        <label for="trainingType">Where will you train?</label>
-        <select id="trainingType" name="trainingType" required>
-          <option value="">Choose your training option</option>
-          <option value="home">Training From Home</option>
-          <option value="gym">Training At Your Gym</option>
-        </select>
+        <button class="button" type="submit">
+          Continue to membership →
+        </button>
 
-        <div id="homeQuestions" hidden>
-          <h2 class="section-title">Your home setup</h2>
-          <p class="help">Choose all the equipment you have available.</p>
-          <div class="choices">
-            <label class="choice"><input type="checkbox" name="equipment" value="Bodyweight"> Bodyweight only</label>
-            <label class="choice"><input type="checkbox" name="equipment" value="Dumbbells"> Dumbbells</label>
-            <label class="choice"><input type="checkbox" name="equipment" value="Resistance bands"> Resistance bands</label>
-            <label class="choice"><input type="checkbox" name="equipment" value="Bench"> Bench or step</label>
-            <label class="choice"><input type="checkbox" name="equipment" value="Home gym equipment"> Home gym equipment</label>
-          </div>
-          <label for="space">Available workout space</label>
-          <select id="space" name="space">
-            <option value="">Choose your space</option>
-            <option>Small space</option>
-            <option>Enough room for a mat</option>
-            <option>Large workout area</option>
-          </select>
-        </div>
-
-        <div id="gymQuestions" hidden>
-          <h2 class="section-title">Your gym setup</h2>
-          <p class="help">Which equipment is available at your gym?</p>
-          <div class="choices">
-            <label class="choice"><input type="checkbox" name="gymEquipment" value="Free weights"> Free weights and dumbbells</label>
-            <label class="choice"><input type="checkbox" name="gymEquipment" value="Machines"> Weight machines</label>
-            <label class="choice"><input type="checkbox" name="gymEquipment" value="Cable machines"> Cable machines</label>
-            <label class="choice"><input type="checkbox" name="gymEquipment" value="Cardio machines"> Cardio machines</label>
-            <label class="choice"><input type="checkbox" name="gymEquipment" value="Full gym"> Full gym equipment</label>
-          </div>
-        </div>
-
-        <h2 class="section-title">Anything else we should know?</h2>
-
-        <label for="limitations">Exercises, injuries or physical limitations to consider (optional)</label>
-        <textarea id="limitations" name="limitations"
-          placeholder="Share only what you're comfortable sharing."></textarea>
-
-        <label for="notes">Anything else about your goals? (optional)</label>
-        <textarea id="notes" name="notes"
-          placeholder="Tell us what you want your plan to focus on."></textarea>
-
-        <button class="button" type="submit">Continue to membership</button>
         <p id="message" role="status" aria-live="polite"></p>
       </form>
 
@@ -337,58 +784,78 @@
   </main>
 
   <script>
-    const trainingType = document.getElementById("trainingType");
+    const form = document.getElementById("profileForm");
+    const message = document.getElementById("message");
     const homeQuestions = document.getElementById("homeQuestions");
     const gymQuestions = document.getElementById("gymQuestions");
-    const profileForm = document.getElementById("profileForm");
-    const message = document.getElementById("message");
+    const trainingRadios =
+      document.querySelectorAll('input[name="trainingType"]');
+
+    const params = new URLSearchParams(window.location.search);
+    const originalTraining = params.get("training");
 
     function updateTrainingQuestions() {
-      const isHome = trainingType.value === "home";
-      const isGym = trainingType.value === "gym";
+      const selected = form.querySelector(
+        'input[name="trainingType"]:checked'
+      );
+      const type = selected ? selected.value : "";
 
-      homeQuestions.hidden = !isHome;
-      gymQuestions.hidden = !isGym;
+      homeQuestions.hidden = type !== "home";
+      gymQuestions.hidden = type !== "gym";
 
       homeQuestions.querySelectorAll("input, select").forEach(el => {
-        el.disabled = !isHome;
+        el.disabled = type !== "home";
       });
 
       gymQuestions.querySelectorAll("input, select").forEach(el => {
-        el.disabled = !isGym;
+        el.disabled = type !== "gym";
       });
     }
 
-    trainingType.addEventListener("change", updateTrainingQuestions);
+    if (originalTraining === "home" || originalTraining === "gym") {
+      const selected = form.querySelector(
+        'input[name="trainingType"][value="' +
+        originalTraining + '"]'
+      );
+
+      if (selected) selected.checked = true;
+    }
+
+    trainingRadios.forEach(radio => {
+      radio.addEventListener("change", updateTrainingQuestions);
+    });
+
     updateTrainingQuestions();
 
-    profileForm.addEventListener("submit", event => {
-  event.preventDefault();
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+      message.textContent = "";
 
-  if (!profileForm.reportValidity()) return;
+      if (!form.reportValidity()) return;
 
-  const params = new URLSearchParams(
-    window.location.search
-  );
+      if (
+        originalTraining !== "home" &&
+        originalTraining !== "gym"
+      ) {
+        message.textContent =
+          "Please return to the home page and choose your training option first.";
+        return;
+      }
 
-  const training = params.get("training");
+      const selectedTraining = form.querySelector(
+        'input[name="trainingType"]:checked'
+      );
 
-  if (training !== "home" && training !== "gym") {
-    message.textContent =
-      "Please return to your training choice and start again.";
-    return;
-  }
+      if (!selectedTraining || selectedTraining.value !== originalTraining) {
+        message.textContent =
+          "Please select the training option you chose at the beginning.";
+        return;
+      }
 
-  if (trainingType.value !== training) {
-    message.textContent =
-      "Your training choice does not match. Please select your original training option.";
-    return;
-  }
-
-  window.location.href =
-    "membership.html?training=" +
-    encodeURIComponent(training);
-});
+      window.location.href =
+        "membership.html?training=" +
+        encodeURIComponent(originalTraining);
+    });
   </script>
 </body>
 </html>
