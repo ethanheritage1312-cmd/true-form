@@ -391,12 +391,42 @@ footer p {
     transition: none;
   }
 }
-/* FIT SECTION PHOTOS NEATLY */
+
+/* TRUE FORM - RESPONSIVE IMAGE FIT */
+
 .section-photo {
   display: block;
   width: 100%;
-  height: 220px;
+  height: auto;
+  max-height: 320px;
+  aspect-ratio: 16 / 9;
   object-fit: contain;
   object-position: center;
   border-radius: 16px;
+}
+
+.visual-option img {
+  display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 12px;
+}
+
+.training-image {
+  width: 100%;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 700px) {
+  .section-photo {
+    max-height: 260px;
+  }
+
+  .visual-option img {
+    height: 160px;
+  }
 }
