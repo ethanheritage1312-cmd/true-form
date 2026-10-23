@@ -398,11 +398,16 @@ footer p {
   display: block;
   width: 100%;
   height: auto;
-  max-height: 320px;
-  aspect-ratio: 16 / 9;
+.section-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  aspect-ratio: auto;
   object-fit: contain;
   object-position: center;
   border-radius: 16px;
+  margin: 0 auto 20px;
 }
 
 .visual-option img {
