@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Join True Form</title>
+
   <style>
     :root {
       --cream: #f5f0e8;
@@ -84,6 +85,11 @@
       font-weight: 700;
     }
 
+    button:disabled {
+      cursor: wait;
+      opacity: 0.65;
+    }
+
     .primary, .google {
       width: 100%;
       min-height: 48px;
@@ -118,26 +124,44 @@
       text-align: center;
     }
 
-    .switch button {
+    .switch button, .forgot button {
       border: none;
       background: transparent;
       color: var(--terracotta);
     }
 
-    .notice, #message {
+    .forgot {
+      margin-top: 14px;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    #message {
       margin-top: 18px;
+      font-size: 13px;
+      line-height: 1.6;
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+
+    .notice {
+      margin-top: 18px;
+      color: var(--muted);
       font-size: 12px;
       line-height: 1.6;
       text-align: center;
     }
 
-    .notice { color: var(--muted); }
-
     @media (max-width: 360px) {
       .card { padding: 28px 19px; }
     }
   </style>
+
+  <!-- Firebase browser SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 </head>
+
 <body>
   <main class="card">
     <div class="brand">TRUE <span>FORM</span></div>
@@ -168,6 +192,12 @@
       </button>
     </form>
 
+    <div class="forgot" id="forgotSection" hidden>
+      <button id="forgotButton" type="button">
+        Forgot your password?
+      </button>
+    </div>
+
     <div class="divider">OR</div>
 
     <button class="google" id="googleButton" type="button">
@@ -182,24 +212,118 @@
     <p id="message" role="status" aria-live="polite"></p>
 
     <p class="notice">
-      Secure account registration and Google sign-in will be activated
-      after we connect the authentication service.
+      Your account is secured by Firebase Authentication.
     </p>
   </main>
 
   <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDngbH6WUcfbhSB2Tt23VsanSBHd00-6JU",
+      authDomain: "true-form-968a9.firebaseapp.com",
+      projectId: "true-form-968a9",
+      storageBucket: "true-form-968a9.firebasestorage.app",
+      messagingSenderId: "512916642761",
+      appId: "1:512916642761:web:718c1adaf4e0fbb008a618",
+      measurementId: "G-SF0CJBH53P"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
     const form = document.getElementById("accountForm");
     const heading = document.getElementById("heading");
     const intro = document.getElementById("intro");
     const nameField = document.getElementById("nameField");
     const nameInput = document.getElementById("name");
+    const email = document.getElementById("email");
     const password = document.getElementById("password");
     const submitButton = document.getElementById("submitButton");
+    const googleButton = document.getElementById("googleButton");
     const switchText = document.getElementById("switchText");
     const switchButton = document.getElementById("switchButton");
+    const forgotSection = document.getElementById("forgotSection");
+    const forgotButton = document.getElementById("forgotButton");
     const message = document.getElementById("message");
 
     let signingIn = false;
+    const params = new URLSearchParams(window.location.search);
+
+    // Keep the selected training option throughout authentication.
+    function getTraining() {
+      const training = new URLSearchParams(
+        window.location.search
+      ).get("training");
+
+      if (training === "home" || training === "gym") {
+        sessionStorage.setItem("trueFormTraining", training);
+        return training;
+      }
+
+      const saved = sessionStorage.getItem("trueFormTraining");
+      return saved === "home" || saved === "gym" ? saved : null;
+    }
+
+    function showMessage(text, isError = false) {
+      message.textContent = text;
+      message.style.color = isError ? "#b42318" : "#477044";
+    }
+
+    function setBusy(busy) {
+      submitButton.disabled = busy;
+      googleButton.disabled = busy;
+      switchButton.disabled = busy;
+      forgotButton.disabled = busy;
+    }
+
+    function explainError(error) {
+      const messages = {
+        "auth/email-already-in-use":
+          "An account already exists with this email. Try signing in.",
+        "auth/invalid-email":
+          "Please enter a valid email address.",
+        "auth/weak-password":
+          "Choose a stronger password with at least 8 characters.",
+        "auth/invalid-credential":
+          "Email or password is incorrect. Please try again.",
+        "auth/user-not-found":
+          "No account was found. Please create an account first.",
+        "auth/wrong-password":
+          "Email or password is incorrect. Please try again.",
+        "auth/popup-blocked":
+          "The Google sign-in window was blocked. Please allow pop-ups and try again.",
+        "auth/popup-closed-by-user":
+          "Google sign-in was cancelled.",
+        "auth/unauthorized-domain":
+          "This website domain is not authorised in Firebase. We need to add it in Authentication settings.",
+        "auth/network-request-failed":
+          "Network error. Check your internet connection and try again.",
+        "auth/too-many-requests":
+          "Too many attempts. Please wait a while and try again.",
+        "auth/operation-not-allowed":
+          "This sign-in method is not enabled in Firebase."
+      };
+
+      return messages[error.code] ||
+        "Something went wrong. Please try again. (" +
+        (error.code || "unknown error") + ")";
+    }
+
+    function continueToProfile(user) {
+      const training = getTraining();
+
+      if (!training) {
+        showMessage(
+          "Your account is signed in, but no training option was selected. Return to the homepage and choose Training From Home or Training At Your Gym, then sign in again.",
+          true
+        );
+        return;
+      }
+
+      // Keep the user signed in and preserve their training choice.
+      window.location.href =
+        "describe-yourself.html?training=" +
+        encodeURIComponent(training);
+    }
 
     switchButton.addEventListener("click", () => {
       signingIn = !signingIn;
@@ -216,36 +340,125 @@
       password.autocomplete = signingIn
         ? "current-password" : "new-password";
       password.minLength = signingIn ? 1 : 8;
+      password.placeholder = signingIn
+        ? "Your password" : "At least 8 characters";
 
-      submitButton.textContent = signingIn ? "Sign in" : "Create account";
+      submitButton.textContent = signingIn
+        ? "Sign in" : "Create account";
+
       switchText.textContent = signingIn
         ? "New to True Form?" : "Already have an account?";
-      switchButton.textContent = signingIn ? "Create account" : "Sign in";
-      message.textContent = "";
+
+      switchButton.textContent = signingIn
+        ? "Create account" : "Sign in";
+
+      forgotSection.hidden = !signingIn;
+      showMessage("");
     });
 
-    form.addEventListener("submit", (event) => {
-  event.preventDefault();
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
 
-  if (!form.reportValidity()) return;
+      if (!form.reportValidity()) return;
 
-  const params = new URLSearchParams(window.location.search);
-  const training = params.get("training");
+      if (!getTraining()) {
+        showMessage(
+          "Please return to the homepage and choose Training From Home or Training At Your Gym first.",
+          true
+        );
+        return;
+      }
 
-  if (training !== "home" && training !== "gym") {
-    message.textContent =
-      "Please return to the home page and choose Training From Home or Training At Your Gym first.";
-    return;
-  }
+      setBusy(true);
+      showMessage("");
 
-  window.location.href =
-    "describe-yourself.html?training=" + encodeURIComponent(training);
-});
+      try {
+        let result;
 
-    document.getElementById("googleButton").addEventListener("click", () => {
-      message.textContent =
-        "Google sign-in will work after we connect the secure authentication service.";
+        if (signingIn) {
+          result = await auth.signInWithEmailAndPassword(
+            email.value.trim(),
+            password.value
+          );
+        } else {
+          result = await auth.createUserWithEmailAndPassword(
+            email.value.trim(),
+            password.value
+          );
+
+          const fullName = nameInput.value.trim();
+
+          if (fullName) {
+            await result.user.updateProfile({
+              displayName: fullName
+            });
+          }
+        }
+
+        continueToProfile(result.user);
+      } catch (error) {
+        showMessage(explainError(error), true);
+      } finally {
+        setBusy(false);
+      }
     });
+
+    googleButton.addEventListener("click", async () => {
+      if (!getTraining()) {
+        showMessage(
+          "Please return to the homepage and choose Training From Home or Training At Your Gym first.",
+          true
+        );
+        return;
+      }
+
+      setBusy(true);
+      showMessage("");
+
+      try {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: "select_account" });
+
+        // Redirect sign-in is more reliable on mobile browsers.
+        await auth.signInWithRedirect(provider);
+      } catch (error) {
+        setBusy(false);
+        showMessage(explainError(error), true);
+      }
+    });
+
+    forgotButton.addEventListener("click", async () => {
+      const address = email.value.trim();
+
+      if (!address) {
+        showMessage(
+          "Enter your email address above, then tap Forgot your password?",
+          true
+        );
+        email.focus();
+        return;
+      }
+
+      try {
+        await auth.sendPasswordResetEmail(address);
+        showMessage(
+          "If an account exists for that email, a password reset email will be sent."
+        );
+      } catch (error) {
+        showMessage(explainError(error), true);
+      }
+    });
+
+    // Handle return from Google's sign-in page.
+    auth.getRedirectResult()
+      .then((result) => {
+        if (result && result.user) {
+          continueToProfile(result.user);
+        }
+      })
+      .catch((error) => {
+        showMessage(explainError(error), true);
+      });
   </script>
 </body>
 </html>
