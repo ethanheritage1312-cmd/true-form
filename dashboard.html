@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f0e8">
+  <title>True Form | Your Dashboard</title>
+
+  <style>
+    :root {
+      --cream: #f5f0e8;
+      --dark: #20201e;
+      --terracotta: #c76f4b;
+      --muted: #77736d;
+      --border: #e5ded5;
+      --soft: #fcf3ee;
+      --white: #fffdf9;
+      --green: #54745a;
+      --shadow: 0 12px 35px rgba(32, 32, 30, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--cream);
+      color: var(--dark);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+
+    button, a {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      max-width: 1500px;
+      min-height: 100vh;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 245px minmax(0, 1fr);
+    }
+
+    .sidebar {
+      background: var(--white);
+      border-right: 1px solid var(--border);
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 34px;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      white-space: nowrap;
+    }
+
+    .logo span {
+      color: var(--terracotta);
+    }
+
+    .side-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      margin: 0 0 12px 10px;
+    }
+
+    .nav {
+      display: grid;
+      gap: 7px;
+    }
+
+    .nav a {
+      padding: 12px 13px;
+      border-radius: 12px;
+      color: var(--muted);
+      font-size: 14px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      background: var(--soft);
+      color: var(--dark);
+    }
+
+    .nav a.active {
+      font-weight: 700;
+      border-left: 3px solid var(--terracotta);
+    }
+
+    .sidebar-bottom {
+      margin-top: auto;
+      background: var(--soft);
+      padding: 17px;
+      border-radius: 16px;
+    }
+
+    .sidebar-bottom p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+
+    .main {
+      min-width: 0;
+      padding: 30px clamp(16px, 4vw, 46px) 45px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .topbar small {
+      color: var(--muted);
+      display: block;
+      font-size: 12px;
+    }
+
+    .topbar h2 {
+      font-size: 20px;
+      margin-top: 2px;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .avatar {
+      width: 43px;
+      height: 43px;
+      border-radius: 50%;
+      background: var(--soft);
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: var(--terracotta);
+    }
+
+    .profile strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .profile span {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .preview-notice {
+      background: #fff8e9;
+      border: 1px solid #ead9ad;
+      border-radius: 12px;
+      padding: 12px 15px;
+      color: #65532d;
+      font-size: 12px;
+      margin-bottom: 22px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: var(--dark);
+      color: white;
+      border-radius: 24px;
+      padding: clamp(25px, 4vw, 43px);
+      margin-bottom: 25px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      right: -80px;
+      top: -95px;
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 50%;
+      box-shadow: 0 0 0 25px rgba(255,255,255,0.025),
+                  0 0 0 55px rgba(255,255,255,0.025);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      color: #e7a58b;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 {
+      max-width: 650px;
+      font-size: clamp(29px, 4vw, 43px);
+      line-height: 1.15;
+      letter-spacing: -1.4px;
+      margin-bottom: 13px;
+    }
+
+    .hero p {
+      max-width: 530px;
+      color: #d1cdc7;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 11px;
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 30px;
+      font-size: 11px;
+      color: #f6eee7;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 15px;
+      margin: 29px 0 15px;
+    }
+
+    .section-heading h2 {
+      font-size: 20px;
+      letter-spacing: -0.4px;
+    }
+
+    .section-heading p {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .section-link {
+      color: var(--terracotta);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+    }
+
+    .stat, .panel, .workout-card, .day-card, .meal-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+    }
+
+    .stat {
+      padding: 20px;
+    }
+
+    .stat-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .stat-icon {
+      width: 35px;
+      height: 35px;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
+      background: var(--soft);
+      font-size: 17px;
+    }
+
+    .stat h3 {
+      font-size: 27px;
+      line-height: 1.2;
+      margin: 15px 0 4px;
+    }
+
+    .stat small {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(250px, 0.9fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 22px;
+      min-width: 0;
+    }
+
+    .panel h3 {
+      font-size: 16px;
+    }
+
+    .panel-subtitle {
+      color: var(--muted);
+      font-size: 12px;
+      margin: 3px 0 18px;
+    }
+
+    .workout-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .workout-card {
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .workout-art {
+      flex: 0 0 65px;
+      height: 65px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      font-size: 27px;
+      background: var(--soft);
+    }
+
+    .workout-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .workout-info h4 {
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    .workout-info p {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 7px;
+      margin-top: 7px;
+      border-radius: 6px;
+      background: #f1eee7;
+      color: #6d675e;
+      font-size: 10px;
+    }
+
+    .complete-button {
+      flex: 0 0 auto;
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--dark);
+      border-radius: 9px;
+      padding: 8px 10px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .complete-button:hover,
+    .complete-button.done {
+      background: var(--green);
+      border-color: var(--green);
+      color: white;
+    }
+
+    .schedule {
+      display: grid;
+      gap: 9px;
+    }
+
+    .day-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+    }
+
+    .day-row:last-child {
+      border-bottom: 0;
+    }
+
+    .day-name {
+      font-weight: 700;
+      min-width: 40px;
+    }
+
+    .day-task {
+      color: var(--muted);
+      flex: 1;
+      padding-left: 5px;
+    }
+
+    .day-status {
+      color: var(--green);
+      font-size: 11px;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: #eee7df;
+      border-radius: 20px;
+      overflow: hidden;
+      margin: 14px 0 8px;
+    }
+
+    .progress-fill {
+      width: 0;
+      height: 100%;
+      background: var(--terracotta);
+      border-radius: inherit;
+      transition: width 0.25s;
+    }
+
+    .progress-caption {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .nutrition-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .meal-card {
+      padding: 18px;
+    }
+
+    .meal-emoji {
+      width: 43px;
+      height: 43px;
+      display: grid;
+      place-items: center;
+      background: var(--soft);
+      border-radius: 12px;
+      font-size: 22px;
+      margin-bottom: 13px;
+    }
+
+    .meal-card h3 {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .meal-card p {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .upgrade {
+      background: var(--soft);
+      border: 1px solid #efd9ce;
+      border-radius: 17px;
+      padding: 21px;
+    }
+
+    .upgrade h3 {
+      font-size: 16px;
+      margin-bottom: 7px;
+    }
+
+    .upgrade p {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 15px;
+    }
+
+    .primary-button {
+      display: inline-block;
+      background: var(--terracotta);
+      color: white;
+      border: 0;
+      border-radius: 10px;
+      padding: 11px 16px;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .primary-button:hover {
+      filter: brightness(0.95);
+    }
+
+    .footer {
+      margin-top: 35px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 11px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 950px) {
+      .app {
+        grid-template-columns: 200px minmax(0, 1fr);
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nutrition-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 650px) {
+      .app {
+        display: block;
+      }
+
+      .sidebar {
+        padding: 17px 16px 12px;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+        gap: 15px;
+      }
+
+      .sidebar-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .logo {
+        font-size: 22px;
+      }
+
+      .side-label, .sidebar-bottom {
+        display: none;
+      }
+
+      .nav {
+        display: flex;
+        gap: 6px;
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+
+      .nav a {
+        flex: 0 0 auto;
+        padding: 8px 11px;
+        font-size: 12px;
+      }
+
+      .main {
+        padding: 21px 15px 30px;
+      }
+
+      .topbar {
+        margin-bottom: 20px;
+      }
+
+      .topbar h2 {
+        font-size: 17px;
+      }
+
+      .hero {
+        border-radius: 19px;
+        padding: 25px 21px;
+      }
+
+      .hero h1 {
+        font-size: 31px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .stat {
+        padding: 15px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+      }
+
+      .stat h3 {
+        margin: 5px 0 0;
+      }
+
+      .stat small {
+        grid-column: 1;
+      }
+
+      .stat-icon {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+      }
+
+      .panel {
+        padding: 16px;
+      }
+
+      .workout-card {
+        padding: 10px;
+        gap: 9px;
+      }
+
+      .workout-art {
+        flex-basis: 48px;
+        height: 52px;
+        font-size: 22px;
+      }
+
+      .complete-button {
+        padding: 8px;
+      }
+
+      .nutrition-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-heading h2 {
+        font-size: 18px;
+      }
+
+      .footer {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <a class="logo" href="index.html">TRUE <span>FORM</span></a>
+      </div>
+
+      <div>
+        <p class="side-label">YOUR SPACE</p>
+        <nav class="nav">
+          <a class="active" href="#overview">Overview</a>
+          <a href="#workouts">Workouts</a>
+          <a href="#schedule">Weekly plan</a>
+          <a href="#progress">My progress</a>
+          <a id="nutritionNav" href="#nutrition" class="hidden">Nutrition</a>
+        </nav>
+      </div>
+
+      <div class="sidebar-bottom">
+        <strong>Small steps. Real progress.</strong>
+        <p>Your journey is yours. Focus on consistency, not perfection.</p>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <small>YOUR PERSONAL FITNESS SPACE</small>
+          <h2 id="pageHeading">Your dashboard</h2>
+        </div>
+        <div class="profile">
+          <div class="avatar" id="avatar">TF</div>
+          <div>
+            <strong id="profileName">Your profile</strong>
+            <span id="planLabel">Standard plan preview</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="preview-notice" id="previewNotice">
+        <strong>Preview mode:</strong> This dashboard is being prepared for launch.
+        Membership verification, saved progress and payment access controls still need
+        to be connected before real customers use it.
+      </div>
+
+      <section class="hero" id="overview">
+        <div class="eyebrow">WELCOME TO TRUE FORM</div>
+        <h1 id="welcomeHeading">Build strength. Find your true form.</h1>
+        <p id="welcomeText">
+          Your fitness journey starts with the next step. Follow your plan,
+          build healthy habits and celebrate the progress you make along the way.
+        </p>
+        <div class="hero-meta">
+          <span class="pill" id="trainingPill">🏋️ Your training plan</span>
+          <span class="pill" id="membershipPill">✦ Standard membership</span>
+        </div>
+      </section>
+
+      <section aria-label="Your fitness summary">
+        <div class="section-heading">
+          <div>
+            <h2>Your overview</h2>
+            <p>A simple snapshot of your fitness journey.</p>
+          </div>
+        </div>
+
+        <div class="stats">
+          <article class="stat">
+            <div>
+              <div class="stat-top">Workouts completed</div>
+              <h3 id="completedCount">0</h3>
+              <small>Completed in this preview</small>
+            </div>
+            <div class="stat-icon">💪</div>
+          </article>
+
+          <article class="stat">
+            <div>
+              <div class="stat-top">Weekly target</div>
+              <h3>4 sessions</h3>
+              <small>A sample weekly goal</small>
+            </div>
+            <div class="stat-icon">🎯</div>
+          </article>
+
+          <article class="stat">
+            <div>
+              <div class="stat-top">Your focus</div>
+              <h3 id="focusValue">Build strength</h3>
+              <small>Adjustable to your goals later</small>
+            </div>
+            <div class="stat-icon">🌱</div>
+          </article>
+        </div>
+      </section>
+
+      <section id="workouts">
+        <div class="section-heading">
+          <div>
+            <h2>Your workouts</h2>
+            <p id="workoutSubtitle">A sample plan to help you get moving.</p>
+          </div>
+        </div>
+
+        <div class="content-grid">
+          <div class="panel">
+            <h3>Recommended sessions</h3>
+            <p class="panel-subtitle">Mark a session complete to try the progress tracker.</p>
+
+            <div class="workout-list" id="workoutList">
+              <article class="workout-card">
+                <div class="workout-art">🔥</div>
+                <div class="workout-info">
+                  <h4>Full-body foundation</h4>
+                  <p>20 minutes · Beginner friendly</p>
+                  <span class="tag">Full body</span>
+                </div>
+                <button class="complete-button" type="button">Complete</button>
+              </article>
+
+              <article class="workout-card">
+                <div class="workout-art">🦵</div>
+                <div class="workout-info">
+                  <h4>Lower-body strength</h4>
+                  <p>25 minutes · Controlled movement</p>
+                  <span class="tag">Strength</span>
+                </div>
+                <button class="complete-button" type="button">Complete</button>
+              </article>
+
+              <article class="workout-card">
+                <div class="workout-art">⚡</div>
+                <div class="workout-info">
+                  <h4>Core and stability</h4>
+                  <p>15 minutes · Core focus</p>
+                  <span class="tag">Core</span>
+                </div>
+                <button class="complete-button" type="button">Complete</button>
+              </article>
+
+              <article class="workout-card">
+                <div class="workout-art">🌿</div>
+                <div class="workout-info">
+                  <h4>Mobility and recovery</h4>
+                  <p>15 minutes · Gentle movement</p>
+                  <span class="tag">Recovery</span>
+                </div>
+                <button class="complete-button" type="button">Complete</button>
+              </article>
+            </div>
+          </div>
+
+          <div class="panel" id="schedule">
+            <h3>Your weekly plan</h3>
+            <p class="panel-subtitle">A balanced sample schedule.</p>
+
+            <div class="schedule">
+              <div class="day-row">
+                <span class="day-name">Mon</span>
+                <span class="day-task">Full-body foundation</span>
+                <span class="day-status">●</span>
+              </div>
+              <div class="day-row">
+                <span class="day-name">Tue</span>
+                <span class="day-task">Recovery or walking</span>
+                <span class="day-status">○</span>
+              </div>
+              <div class="day-row">
+                <span class="day-name">Wed</span>
+                <span class="day-task">Lower-body strength</span>
+                <span class="day-status">●</span>
+              </div>
+              <div class="day-row">
+                <span class="day-name">Thu</span>
+                <span class="day-task">Rest and recovery</span>
+                <span class="day-status">○</span>
+              </div>
+              <div class="day-row">
+                <span class="day-name">Fri</span>
+                <span class="day-task">Core and stability</span>
+                <span class="day-status">●</span>
+              </div>
+              <div class="day-row">
+                <span class="day-name">Sat</span>
+                <span class="day-task">Optional light activity</span>
+                <span class="day-status">○</span>
+              </div>
+              <div class="day-row">
+                <span class="day-name">Sun</span>
+                <span class="day-task">Rest day</span>
+                <span class="day-status">○</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="progress">
+        <div class="section-heading">
+          <div>
+            <h2>Your progress</h2>
+            <p>Every completed session is a step forward.</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>This week's activity</h3>
+          <p class="panel-subtitle">A sample target of four workouts per week.</p>
+          <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="progress-caption">
+            <span id="progressText">0 of 4 sessions completed</span>
+            <span id="progressPercent">0%</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="nutrition" class="hidden">
+        <div class="section-heading">
+          <div>
+            <h2>Your food and nutrition</h2>
+            <p>Premium membership includes nutrition guidance.</p>
+          </div>
+        </div>
+
+        <div class="nutrition-grid">
+          <article class="meal-card">
+            <div class="meal-emoji">🥣</div>
+            <h3>Breakfast ideas</h3>
+            <p>Explore balanced breakfast options that suit your preferences and routine.</p>
+          </article>
+          <article class="meal-card">
+            <div class="meal-emoji">🥗</div>
+            <h3>Lunch ideas</h3>
+            <p>Discover simple meal ideas with a mix of vegetables, protein and energy foods.</p>
+          </article>
+          <article class="meal-card">
+            <div class="meal-emoji">🍲</div>
+            <h3>Dinner ideas</h3>
+            <p>Plan satisfying meals around your schedule, budget and food preferences.</p>
+          </article>
+          <article class="meal-card">
+            <div class="meal-emoji">💧</div>
+            <h3>Hydration habits</h3>
+            <p>Build a consistent water-drinking routine throughout your day.</p>
+          </article>
+          <article class="meal-card">
+            <div class="meal-emoji">🛒</div>
+            <h3>Shopping planner</h3>
+            <p>Prepare a shopping list that makes your weekly food planning easier.</p>
+          </article>
+          <article class="meal-card">
+            <div class="meal-emoji">📅</div>
+            <h3>Meal planning</h3>
+            <p>Organise your meals ahead of time to make everyday choices simpler.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="standardUpgrade" class="hidden">
+        <div class="section-heading">
+          <div>
+            <h2>Want more support?</h2>
+            <p>Keep your current plan focused on exercise.</p>
+          </div>
+        </div>
+        <div class="upgrade">
+          <h3>Discover True Form Premium</h3>
+          <p>
+            Premium includes everything in the exercise plan, plus food and
+            nutrition features. The planned price is R130 per month, compared
+            with R80 per month for the exercise-only plan.
+          </p>
+          <a class="primary-button" href="membership.html">View membership options</a>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>© <span id="year"></span> True Form. Your training, your way.</span>
+        <span>Build consistency. Celebrate progress.</span>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // PREVIEW ONLY:
+    // These URL options change the display for testing.
+    // They do NOT verify a real membership or payment.
+    // Secure access checks must be added before launch.
+
+    const params = new URLSearchParams(window.location.search);
+    const plan = (params.get("plan") || "standard").toLowerCase();
+    const training = (params.get("training") || "home").toLowerCase();
+    const isPremium = plan === "premium";
+    const isGym = training === "gym";
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById("planLabel").textContent =
+      isPremium ? "Premium plan preview" : "Standard plan preview";
+    document.getElementById("membershipPill").textContent =
+      isPremium ? "✦ Premium membership preview" : "✦ Standard membership preview";
+    document.getElementById("trainingPill").textContent =
+      isGym ? "🏋️ Gym training" : "🏠 Home training";
+    document.getElementById("workoutSubtitle").textContent =
+      isGym
+        ? "Sample sessions for a gym environment."
+        : "Sample sessions you can adapt for home.";
+
+    if (isGym) {
+      document.getElementById("welcomeHeading").textContent =
+        "Make every gym session count.";
+      document.getElementById("welcomeText").textContent =
+        "Build a consistent routine with sample strength, core and recovery sessions. Your personalised training plan can be connected here.";
+      document.getElementById("focusValue").textContent = "Gym strength";
+      document.querySelectorAll(".workout-art")[0].textContent = "🏋️";
+      document.querySelectorAll(".workout-art")[1].textContent = "🦵";
+      document.querySelectorAll(".workout-art")[2].textContent = "💪";
+      document.querySelectorAll(".workout-art")[3].textContent = "🚴";
+    }
+
+    if (isPremium) {
+      document.getElementById("pageHeading").textContent = "Your Premium dashboard";
+      document.getElementById("nutritionNav").classList.remove("hidden");
+      document.getElementById("nutrition").classList.remove("hidden");
+      document.getElementById("standardUpgrade").classList.add("hidden");
+    } else {
+      document.getElementById("pageHeading").textContent = "Your exercise dashboard";
+      document.getElementById("nutritionNav").classList.add("hidden");
+      document.getElementById("nutrition").classList.add("hidden");
+      document.getElementById("standardUpgrade").classList.remove("hidden");
+    }
+
+    // Demo-only progress counter. It is not saved to an account.
+    let completed = 0;
+    const buttons = document.querySelectorAll(".complete-button");
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        if (button.classList.contains("done")) {
+          button.classList.remove("done");
+          button.textContent = "Complete";
+          completed = Math.max(0, completed - 1);
+        } else {
+          button.classList.add("done");
+          button.textContent = "✓ Done";
+          completed += 1;
+        }
+
+        document.getElementById("completedCount").textContent = completed;
+
+        const percent = Math.min(100, Math.round((completed / 4) * 100));
+        document.getElementById("progressFill").style.width = percent + "%";
+        document.getElementById("progressText").textContent =
+          completed + " of 4 sessions completed";
+        document.getElementById("progressPercent").textContent = percent + "%";
+      });
+    });
+
+    // The account name will be connected to Firebase later.
+    // Do not treat the preview URL or this script as an access-control system.
+  </script>
+</body>
+</html>
