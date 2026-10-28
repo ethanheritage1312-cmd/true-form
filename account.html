@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Join True Form</title>
+  <title>True Form | Account</title>
 
   <style>
     :root {
@@ -11,9 +11,14 @@
       --dark: #20201e;
       --terracotta: #c76f4b;
       --muted: #77736d;
+      --border: #e5ded5;
+      --soft: #fcf3ee;
+      --white: #ffffff;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -30,136 +35,150 @@
     .card {
       width: 100%;
       max-width: 440px;
-      padding: 34px 26px;
-      background: white;
-      border-radius: 18px;
-      box-shadow: 0 12px 35px #00000012;
+      padding: 32px 26px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 0 12px 35px rgba(32, 32, 30, 0.07);
     }
 
     .brand {
-      margin-bottom: 28px;
-      font-size: 25px;
+      margin-bottom: 26px;
+      text-align: center;
+      font-size: 22px;
       font-weight: 800;
       letter-spacing: 2px;
-      text-align: center;
     }
 
-    .brand span { color: var(--terracotta); }
+    .brand span {
+      color: var(--terracotta);
+    }
 
     h1 {
       margin: 0 0 10px;
-      font-size: 29px;
       text-align: center;
+      font-size: 29px;
     }
 
     .intro {
-      margin: 0 0 26px;
+      margin: 0 0 25px;
       color: var(--muted);
-      font-size: 14px;
-      line-height: 1.6;
       text-align: center;
+      line-height: 1.6;
+      font-size: 14px;
     }
 
     label {
       display: block;
       margin: 16px 0 7px;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 700;
     }
 
     input {
       width: 100%;
-      padding: 14px;
-      border: 1px solid #ddd8d0;
-      border-radius: 9px;
+      padding: 13px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--dark);
       font-size: 16px;
     }
 
     input:focus {
       outline: 2px solid var(--terracotta);
+      outline-offset: 1px;
     }
 
     button {
-      cursor: pointer;
+      width: 100%;
+      min-height: 47px;
+      margin-top: 18px;
+      padding: 12px 16px;
+      border: 0;
+      border-radius: 10px;
       font-size: 15px;
       font-weight: 700;
-    }
-
-    button:disabled {
-      cursor: wait;
-      opacity: 0.65;
-    }
-
-    .primary, .google {
-      width: 100%;
-      min-height: 48px;
-      margin-top: 20px;
-      border-radius: 9px;
+      cursor: pointer;
     }
 
     .primary {
-      border: none;
       background: var(--terracotta);
       color: white;
     }
 
     .google {
-      margin-top: 16px;
-      border: 1px solid #ddd8d0;
       background: white;
       color: var(--dark);
+      border: 1px solid var(--border);
     }
 
     .divider {
-      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0 4px;
       color: var(--muted);
-      font-size: 12px;
-      text-align: center;
+      font-size: 13px;
     }
 
-    .switch {
-      margin-top: 24px;
+    .divider::before,
+    .divider::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: var(--border);
+    }
+
+    .switch,
+    .forgot {
+      margin-top: 20px;
+      text-align: center;
       color: var(--muted);
       font-size: 14px;
-      text-align: center;
+      line-height: 1.6;
     }
 
-    .switch button, .forgot button {
-      border: none;
-      background: transparent;
+    .switch button,
+    .forgot button {
+      width: auto;
+      min-height: 0;
+      margin: 0;
+      padding: 4px;
+      background: none;
       color: var(--terracotta);
-    }
-
-    .forgot {
-      margin-top: 14px;
-      text-align: center;
-      font-size: 13px;
+      font-size: inherit;
     }
 
     #message {
-      margin-top: 18px;
-      font-size: 13px;
-      line-height: 1.6;
-      text-align: center;
+      display: none;
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 9px;
+      background: var(--soft);
+      color: var(--dark);
+      font-size: 14px;
+      line-height: 1.5;
       overflow-wrap: anywhere;
     }
 
-    .notice {
-      margin-top: 18px;
+    .back {
+      display: block;
+      margin-top: 20px;
       color: var(--muted);
-      font-size: 12px;
-      line-height: 1.6;
       text-align: center;
+      font-size: 13px;
+      text-decoration: none;
     }
 
-    @media (max-width: 360px) {
-      .card { padding: 28px 19px; }
+    .back:hover {
+      color: var(--terracotta);
+    }
+
+    [hidden] {
+      display: none !important;
     }
   </style>
-
-  <!-- Firebase browser SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 </head>
 
 <body>
@@ -168,53 +187,67 @@
 
     <h1 id="heading">Create your account</h1>
     <p class="intro" id="intro">
-      Your fitness journey starts here. Create an account to continue.
+      Start your fitness journey. Sign up or sign in to continue.
     </p>
 
     <form id="accountForm">
       <div id="nameField">
-        <label for="name">Full name</label>
-        <input id="name" name="name" autocomplete="name"
-          placeholder="Your full name" required>
+        <label for="fullName">Your name</label>
+        <input
+          id="fullName"
+          type="text"
+          autocomplete="name"
+          placeholder="Enter your name"
+        >
       </div>
 
       <label for="email">Email address</label>
-      <input id="email" name="email" type="email"
-        autocomplete="email" placeholder="you@example.com" required>
+      <input
+        id="email"
+        type="email"
+        autocomplete="email"
+        placeholder="you@example.com"
+        required
+      >
 
       <label for="password">Password</label>
-      <input id="password" name="password" type="password"
-        autocomplete="new-password" minlength="8"
-        placeholder="At least 8 characters" required>
+      <input
+        id="password"
+        type="password"
+        autocomplete="new-password"
+        placeholder="At least 6 characters"
+        minlength="6"
+        required
+      >
 
       <button class="primary" id="submitButton" type="submit">
         Create account
       </button>
     </form>
 
-    <div class="forgot" id="forgotSection" hidden>
-      <button id="forgotButton" type="button">
-        Forgot your password?
-      </button>
+    <div class="forgot" id="forgotArea" hidden>
+      <button type="button" id="forgotButton">Forgot your password?</button>
     </div>
 
-    <div class="divider">OR</div>
+    <div class="divider">or</div>
 
-    <button class="google" id="googleButton" type="button">
+    <button class="google" type="button" id="googleButton">
       Continue with Google
     </button>
 
     <div class="switch">
       <span id="switchText">Already have an account?</span>
-      <button id="switchButton" type="button">Sign in</button>
+      <button type="button" id="switchButton">Sign in</button>
     </div>
 
-    <p id="message" role="status" aria-live="polite"></p>
+    <div id="message" role="status" aria-live="polite"></div>
 
-    <p class="notice">
-      Your account is secured by Firebase Authentication.
-    </p>
+    <a class="back" href="index.html">← Back to True Form</a>
   </main>
+
+  <!-- Firebase browser SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 
   <script>
     const firebaseConfig = {
@@ -231,199 +264,166 @@
     const auth = firebase.auth();
 
     const form = document.getElementById("accountForm");
-    const heading = document.getElementById("heading");
-    const intro = document.getElementById("intro");
     const nameField = document.getElementById("nameField");
-    const nameInput = document.getElementById("name");
+    const fullName = document.getElementById("fullName");
     const email = document.getElementById("email");
     const password = document.getElementById("password");
+    const heading = document.getElementById("heading");
+    const intro = document.getElementById("intro");
     const submitButton = document.getElementById("submitButton");
-    const googleButton = document.getElementById("googleButton");
     const switchText = document.getElementById("switchText");
     const switchButton = document.getElementById("switchButton");
-    const forgotSection = document.getElementById("forgotSection");
+    const googleButton = document.getElementById("googleButton");
+    const forgotArea = document.getElementById("forgotArea");
     const forgotButton = document.getElementById("forgotButton");
     const message = document.getElementById("message");
 
-    let signingIn = false;
-    const params = new URLSearchParams(window.location.search);
+    let isSignIn = false;
+    let busy = false;
 
-    // Keep the selected training option throughout authentication.
-    function getTraining() {
-      const training = new URLSearchParams(
-        window.location.search
-      ).get("training");
-
-      if (training === "home" || training === "gym") {
-        sessionStorage.setItem("trueFormTraining", training);
-        return training;
-      }
-
-      const saved = sessionStorage.getItem("trueFormTraining");
-      return saved === "home" || saved === "gym" ? saved : null;
-    }
-
-    function showMessage(text, isError = false) {
+    function showMessage(text) {
       message.textContent = text;
-      message.style.color = isError ? "#b42318" : "#477044";
+      message.style.display = "block";
     }
 
-    function setBusy(busy) {
-      submitButton.disabled = busy;
-      googleButton.disabled = busy;
-      switchButton.disabled = busy;
-      forgotButton.disabled = busy;
+    function hideMessage() {
+      message.textContent = "";
+      message.style.display = "none";
     }
 
-    function explainError(error) {
-      const messages = {
-        "auth/email-already-in-use":
-          "An account already exists with this email. Try signing in.",
-        "auth/invalid-email":
-          "Please enter a valid email address.",
-        "auth/weak-password":
-          "Choose a stronger password with at least 8 characters.",
-        "auth/invalid-credential":
-          "Email or password is incorrect. Please try again.",
-        "auth/user-not-found":
-          "No account was found. Please create an account first.",
-        "auth/wrong-password":
-          "Email or password is incorrect. Please try again.",
-        "auth/popup-blocked":
-          "The Google sign-in window was blocked. Please allow pop-ups and try again.",
-        "auth/popup-closed-by-user":
-          "Google sign-in was cancelled.",
-        "auth/unauthorized-domain":
-          "This website domain is not authorised in Firebase. We need to add it in Authentication settings.",
-        "auth/network-request-failed":
-          "Network error. Check your internet connection and try again.",
-        "auth/too-many-requests":
-          "Too many attempts. Please wait a while and try again.",
-        "auth/operation-not-allowed":
-          "This sign-in method is not enabled in Firebase."
-      };
-
-      return messages[error.code] ||
-        "Something went wrong. Please try again. (" +
-        (error.code || "unknown error") + ")";
+    function setBusy(value) {
+      busy = value;
+      submitButton.disabled = value;
+      googleButton.disabled = value;
+      switchButton.disabled = value;
+      forgotButton.disabled = value;
+      submitButton.textContent = value
+        ? "Please wait..."
+        : (isSignIn ? "Sign in" : "Create account");
     }
 
-    function continueToProfile(user) {
-      const training = getTraining();
+    function updatePage() {
+      heading.textContent = isSignIn ? "Welcome back" : "Create your account";
+      intro.textContent = isSignIn
+        ? "Sign in to continue your True Form journey."
+        : "Start your fitness journey. Create an account to continue.";
 
-      if (!training) {
-        showMessage(
-          "Your account is signed in, but no training option was selected. Return to the homepage and choose Training From Home or Training At Your Gym, then sign in again.",
-          true
-        );
-        return;
-      }
-
-      // Keep the user signed in and preserve their training choice.
-      window.location.href =
-        "describe-yourself.html?training=" +
-        encodeURIComponent(training);
+      nameField.hidden = isSignIn;
+      fullName.required = !isSignIn;
+      password.autocomplete = isSignIn ? "current-password" : "new-password";
+      forgotArea.hidden = !isSignIn;
+      switchText.textContent = isSignIn
+        ? "New to True Form?"
+        : "Already have an account?";
+      switchButton.textContent = isSignIn ? "Create account" : "Sign in";
+      submitButton.textContent = isSignIn ? "Sign in" : "Create account";
+      hideMessage();
     }
 
     switchButton.addEventListener("click", () => {
-      signingIn = !signingIn;
-
-      heading.textContent = signingIn
-        ? "Welcome back" : "Create your account";
-
-      intro.textContent = signingIn
-        ? "Sign in to continue your fitness journey."
-        : "Your fitness journey starts here. Create an account to continue.";
-
-      nameField.hidden = signingIn;
-      nameInput.required = !signingIn;
-      password.autocomplete = signingIn
-        ? "current-password" : "new-password";
-      password.minLength = signingIn ? 1 : 8;
-      password.placeholder = signingIn
-        ? "Your password" : "At least 8 characters";
-
-      submitButton.textContent = signingIn
-        ? "Sign in" : "Create account";
-
-      switchText.textContent = signingIn
-        ? "New to True Form?" : "Already have an account?";
-
-      switchButton.textContent = signingIn
-        ? "Create account" : "Sign in";
-
-      forgotSection.hidden = !signingIn;
-      showMessage("");
+      if (busy) return;
+      isSignIn = !isSignIn;
+      updatePage();
     });
 
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
+    function getTrainingChoice() {
+      const params = new URLSearchParams(window.location.search);
+      const fromUrl = params.get("training");
+      const saved = sessionStorage.getItem("trueFormTraining");
+      const choice = fromUrl || saved;
 
-      if (!form.reportValidity()) return;
+      if (choice === "home" || choice === "gym") {
+        sessionStorage.setItem("trueFormTraining", choice);
+        return choice;
+      }
 
-      if (!getTraining()) {
-        showMessage(
-          "Please return to the homepage and choose Training From Home or Training At Your Gym first.",
-          true
-        );
+      return null;
+    }
+
+    function continueToProfile() {
+      const training = getTrainingChoice();
+
+      if (!training) {
+        window.location.href = "index.html";
         return;
       }
 
+      window.location.href =
+        "describe-yourself.html?training=" + encodeURIComponent(training);
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (busy) return;
+
+      hideMessage();
       setBusy(true);
-      showMessage("");
 
       try {
-        let result;
-
-        if (signingIn) {
-          result = await auth.signInWithEmailAndPassword(
+        if (isSignIn) {
+          await auth.signInWithEmailAndPassword(
             email.value.trim(),
             password.value
           );
         } else {
-          result = await auth.createUserWithEmailAndPassword(
+          const name = fullName.value.trim();
+
+          if (!name) {
+            throw new Error("Please enter your name.");
+          }
+
+          const result = await auth.createUserWithEmailAndPassword(
             email.value.trim(),
             password.value
           );
 
-          const fullName = nameInput.value.trim();
-
-          if (fullName) {
-            await result.user.updateProfile({
-              displayName: fullName
-            });
-          }
+          await result.user.updateProfile({ displayName: name });
         }
 
-        continueToProfile(result.user);
+        continueToProfile();
       } catch (error) {
-        showMessage(explainError(error), true);
+        const messages = {
+          "auth/email-already-in-use": "An account already exists with this email. Try signing in.",
+          "auth/invalid-email": "Please enter a valid email address.",
+          "auth/weak-password": "Please choose a stronger password with at least 6 characters.",
+          "auth/user-not-found": "No account was found for this email. Check the address or create an account.",
+          "auth/wrong-password": "That password is incorrect. Please try again.",
+          "auth/invalid-credential": "Your email or password is incorrect. Please check and try again.",
+          "auth/too-many-requests": "Too many attempts. Please wait a little before trying again.",
+          "auth/network-request-failed": "Connection problem. Check your internet and try again.",
+          "auth/unauthorized-domain": "This website domain is not authorized in Firebase yet. Add the website domain under Firebase Authentication settings."
+        };
+
+        showMessage(messages[error.code] || error.message || "Something went wrong. Please try again.");
       } finally {
         setBusy(false);
       }
     });
 
     googleButton.addEventListener("click", async () => {
-      if (!getTraining()) {
-        showMessage(
-          "Please return to the homepage and choose Training From Home or Training At Your Gym first.",
-          true
-        );
-        return;
-      }
+      if (busy) return;
 
+      hideMessage();
       setBusy(true);
-      showMessage("");
 
       try {
         const provider = new firebase.auth.GoogleAuthProvider();
-        provider.setCustomParameters({ prompt: "select_account" });
+        const result = await auth.signInWithPopup(provider);
 
-        // Redirect sign-in is more reliable on mobile browsers.
-        await auth.signInWithRedirect(provider);
+        if (result.user) {
+          continueToProfile();
+        }
       } catch (error) {
+        if (error.code === "auth/popup-blocked" ||
+            error.code === "auth/popup-closed-by-user") {
+          showMessage("The Google sign-in window was closed or blocked. Please try again.");
+        } else if (error.code === "auth/unauthorized-domain") {
+          showMessage("This website domain is not authorized in Firebase yet. Add it under Firebase Authentication settings.");
+        } else {
+          showMessage(error.message || "Google sign-in failed. Please try again.");
+        }
+      } finally {
         setBusy(false);
-        showMessage(explainError(error), true);
       }
     });
 
@@ -431,34 +431,27 @@
       const address = email.value.trim();
 
       if (!address) {
-        showMessage(
-          "Enter your email address above, then tap Forgot your password?",
-          true
-        );
+        showMessage("Enter your email address above first, then tap Forgot your password.");
         email.focus();
         return;
       }
 
       try {
         await auth.sendPasswordResetEmail(address);
-        showMessage(
-          "If an account exists for that email, a password reset email will be sent."
-        );
+        showMessage("If an account exists for that email, a password reset email has been sent.");
       } catch (error) {
-        showMessage(explainError(error), true);
+        showMessage(error.message || "Could not send the reset email. Please try again.");
       }
     });
 
-    // Handle return from Google's sign-in page.
-    auth.getRedirectResult()
-      .then((result) => {
-        if (result && result.user) {
-          continueToProfile(result.user);
-        }
-      })
-      .catch((error) => {
-        showMessage(explainError(error), true);
-      });
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        // Stay on this page until the user submits or chooses Google.
+        // This avoids unexpected redirects while editing the form.
+      }
+    });
+
+    updatePage();
   </script>
 </body>
 </html>
